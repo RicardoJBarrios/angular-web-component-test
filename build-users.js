@@ -9,7 +9,7 @@ const build = async () => {
     './dist/apps/users-widget/main.js'
   ];
 
-  await concat(files, 'dist/html/wctest-users.js');
+  await concat(files, 'html/wctest-users.js');
 }
 
 build();

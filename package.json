@@ -12,7 +12,7 @@
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
     "build:users": "ng build users-widget --prod --output-hashing none && node build-users.js",
-    "start:html": "yarn build:users && lite-server --baseDir=\"dist/html\"",
+    "start:html": "yarn build:users && lite-server --baseDir=\"html\"",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
