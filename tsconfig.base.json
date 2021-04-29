@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "wctest-users": ["apps/users-widget/src/app/index"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

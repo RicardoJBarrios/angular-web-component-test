@@ -25,7 +25,8 @@
     "@nrwl/angular:library": {
       "style": "scss",
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "strict": true
     },
     "@nrwl/angular:component": {
       "style": "scss"
@@ -139,6 +140,94 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/ngwc-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "users-widget": {
+      "projectType": "application",
+      "root": "apps/users-widget",
+      "sourceRoot": "apps/users-widget/src",
+      "prefix": "wctest",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/users-widget",
+            "index": "apps/users-widget/src/index.html",
+            "main": "apps/users-widget/src/main.ts",
+            "polyfills": "apps/users-widget/src/polyfills.ts",
+            "tsConfig": "apps/users-widget/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/users-widget/src/favicon.ico",
+              "apps/users-widget/src/assets"
+            ],
+            "styles": ["apps/users-widget/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/users-widget/src/environments/environment.ts",
+                  "with": "apps/users-widget/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "users-widget:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "users-widget:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "users-widget:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/users-widget/src/**/*.ts",
+              "apps/users-widget/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/users-widget"],
+          "options": {
+            "jestConfig": "apps/users-widget/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
