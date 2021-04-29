@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "ngwc",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "ngwc": {
+      "projectType": "application",
+      "root": "apps/ngwc",
+      "sourceRoot": "apps/ngwc/src",
+      "prefix": "wctest",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/ngwc",
+            "index": "apps/ngwc/src/index.html",
+            "main": "apps/ngwc/src/main.ts",
+            "polyfills": "apps/ngwc/src/polyfills.ts",
+            "tsConfig": "apps/ngwc/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/ngwc/src/favicon.ico", "apps/ngwc/src/assets"],
+            "styles": ["apps/ngwc/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ngwc/src/environments/environment.ts",
+                  "with": "apps/ngwc/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngwc:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngwc:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngwc:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ngwc/src/**/*.ts",
+              "apps/ngwc/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/ngwc"],
+          "options": {
+            "jestConfig": "apps/ngwc/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ngwc-e2e": {
+      "root": "apps/ngwc-e2e",
+      "sourceRoot": "apps/ngwc-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ngwc-e2e/cypress.json",
+            "tsConfig": "apps/ngwc-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ngwc:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngwc:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/ngwc-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
