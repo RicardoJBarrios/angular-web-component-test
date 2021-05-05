@@ -9,13 +9,18 @@ import { UsersComponent } from './users.component';
 @NgModule({
   declarations: [UsersComponent],
   imports: [BrowserModule, HttpClientModule],
-  exports: [UsersComponent]
+  exports: [UsersComponent],
 })
 export class UsersWidgetModule implements DoBootstrap {
-
   constructor(protected readonly injector: Injector) {
-    const strategyFactory = new ElementZoneStrategyFactory(UsersComponent, injector);
-    const webComponent = createCustomElement(UsersComponent, {injector, strategyFactory});
+    const strategyFactory = new ElementZoneStrategyFactory(
+      UsersComponent,
+      injector
+    );
+    const webComponent = createCustomElement(UsersComponent, {
+      injector,
+      strategyFactory,
+    });
     customElements.define('wctest-users', webComponent);
   }
 

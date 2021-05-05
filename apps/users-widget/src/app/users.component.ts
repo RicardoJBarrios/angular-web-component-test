@@ -2,9 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { Users } from './users';
-import { UsersService } from './users.service';
-
+import { Users, UsersService } from '@wctest/users';
 
 @Component({
   selector: 'wctest-users',
@@ -14,7 +12,7 @@ import { UsersService } from './users.service';
   `,
   styles: [],
 })
-export class UsersComponent implements  OnInit, OnDestroy {
+export class UsersComponent implements OnInit, OnDestroy {
   @Input() myUrl = '';
   @Input() myTitle = '';
 
@@ -35,7 +33,9 @@ export class UsersComponent implements  OnInit, OnDestroy {
 
   protected getUsers(): void {
     if (this.myUrl) {
-      this.users$ = this.service.findAll$(this.myUrl).pipe(take(1), takeUntil(this.destroy$));
+      this.users$ = this.service
+        .findAll$(this.myUrl)
+        .pipe(take(1), takeUntil(this.destroy$));
     }
   }
 }
